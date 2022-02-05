@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 pygame.init()
 
@@ -36,7 +37,7 @@ class DrawInformation:
         self.max_val = max(lst)
 
         self.block_width = round((self.width - self.SIDE_PAD) /len(lst))
-        self.block_height = Math.floor((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
+        self.block_height = math.floor((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
         self.start_x = self.SIDE_PAD // 2
 
 def draw(draw_info):
@@ -58,7 +59,7 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
     if clear_bg:
         clear_rect = (draw_info.SIDE_PAD // 2, draw_info.TOP_PAD,
                         draw_info.width - draw_info.SIDE_PAD, draw_info.height - draw_info.TOP_PAD)
-        pygame.draw.rect(draw_info.window, draw_info.BACKGROUND_COlOR, clear_rect)
+        pygame.draw.rect(draw_info.window, draw_info.BACKGROUND_COLOR, clear_rect)
 
     for i, val in enumerate(lst):
         x = draw_info.start_x + i * draw_info.block_width
@@ -88,7 +89,7 @@ def bubble_sort(draw_info, ascending = True):
 
     for i in range(len(lst) - 1):
         for j in range(len(lst) - 1 - i):
-            num1  = list[j]
+            num1 = lst[j]
             num2 = lst[j+1]
 
 
@@ -99,6 +100,7 @@ def bubble_sort(draw_info, ascending = True):
 
                 # avoids only running this method at a time
                 yield True
+    return lst
 
 
 def main():
