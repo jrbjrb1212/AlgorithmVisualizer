@@ -1,3 +1,4 @@
+from math import fabs
 from turtle import width
 import pygame
 import random
@@ -114,13 +115,21 @@ def main():
     lst = generate_starting_list(n, min_val, max_val)
     draw_info = DrawInformation(800, 600, lst)
 
-    sorting_algorithm = bulbble_sort()
+    sorting_algorithm = bulbble_sort
     sorting_algo_name = "Bubble Sort"
     sorting_algorithm_generator = None
 
 
     while run:
         clock.tick(60)
+
+        if sorting:
+            try:
+                next(sorting_algorithm_generator)
+            except:
+                sorting = False
+        else:
+            draw(draw_info)
 
         draw(draw_info)
 
