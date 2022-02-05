@@ -1,5 +1,3 @@
-from math import fabs
-from turtle import width
 import pygame
 import random
 
@@ -38,7 +36,7 @@ class DrawInformation:
         self.max_val = max(lst)
 
         self.block_width = round((self.width - self.SIDE_PAD) /len(lst))
-        self.block_height = round((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
+        self.block_height = Math.floor((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
         self.start_x = self.SIDE_PAD // 2
 
 def draw(draw_info):
@@ -59,7 +57,7 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 
     if clear_bg:
         clear_rect = (draw_info.SIDE_PAD // 2, draw_info.TOP_PAD,
-                    draw_info.width - draw_info.SIDE_PAD, draw_info.height - draw_info.TOP_PAD)
+                        draw_info.width - draw_info.SIDE_PAD, draw_info.height - draw_info.TOP_PAD)
         pygame.draw.rect(draw_info.window, draw_info.BACKGROUND_COlOR, clear_rect)
 
     for i, val in enumerate(lst):
@@ -85,26 +83,28 @@ def generate_starting_list(n, min_val, max_val):
     return lst
 
 
-def bulbble_sort(draw_info, ascending = True):
+def bubble_sort(draw_info, ascending = True):
     lst = draw_info.lst
 
     for i in range(len(lst) - 1):
         for j in range(len(lst) - 1 - i):
-            num1  =list[j]
+            num1  = list[j]
             num2 = lst[j+1]
 
 
             if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
                 # quick way to swap with using temp variable
                 lst[j], lst[j+1] = lst[j+1], lst[j]
-                draw_list(draw_info, {j: draw_info.GREEN, j+1: draw_info.RED})
+                draw_list(draw_info, {j: draw_info.GREEN, j+1: draw_info.RED}, True)
 
                 # avoids only running this method at a time
                 yield True
 
+
 def main():
     run = True
     clock = pygame.time.Clock()
+
     n = 50
     min_val = 0
     max_val = 100
@@ -115,7 +115,7 @@ def main():
     lst = generate_starting_list(n, min_val, max_val)
     draw_info = DrawInformation(800, 600, lst)
 
-    sorting_algorithm = bulbble_sort
+    sorting_algorithm = bubble_sort
     sorting_algo_name = "Bubble Sort"
     sorting_algorithm_generator = None
 
@@ -126,12 +126,10 @@ def main():
         if sorting:
             try:
                 next(sorting_algorithm_generator)
-            except:
+            except StopIteration:
                 sorting = False
         else:
             draw(draw_info)
-
-        draw(draw_info)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -146,7 +144,7 @@ def main():
                 sorting = False
     
             elif event.key == pygame.K_SPACE and sorting == False:
-                storting = True
+                sorting = True
                 sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
             
             elif event.key == pygame.K_a and not sorting:
