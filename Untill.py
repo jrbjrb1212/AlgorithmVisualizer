@@ -108,6 +108,7 @@ def bubble_sort(draw_info, ascending = True):
 
 def insertion_sort(draw_info, ascending=True):
     lst = draw_info.lst
+    print(lst)
 
     for i in range(1, len(lst)):
         current = lst[i]
@@ -127,45 +128,53 @@ def insertion_sort(draw_info, ascending=True):
     
     return lst
 
-# look back over this method and merge method
 
-def merge_sort(draw_info, ascending=True):
-    lst = draw_info.lst
+
+# def merge_sort(draw_info, ascending=True):
+#     lst = draw_info.lst
     
-    if len(lst) == 1 or len(lst) == 0:
-        return
-    else:
-        middle = (len(lst) - 1)// 2
-        left = merge_sort(draw_info,ascending, lst[:middle])
-        right = merge_sort(draw_info, ascending, lst[middle:])
-        combined = merge(left, right)
-        return combined
+#     if len(lst) == 1 or len(lst) == 0:
+#         return
+#     else:
+#         middle = (len(lst) - 1)// 2
+#         #raw_list(draw_info, {i-1: draw_info.GREEN, i: draw_info.RED}, True)
+#         left = merge_sort(draw_info, lst[:middle])
+#         right = merge_sort(draw_info, lst[middle:])
+#         combined = merge(left, right)
+#         return combined
 
 
-def merge(draw_info, left, right):
-    sorted_list = []
-    i = 0
-    j = 0
+# def merge(draw_info, left, right):
+#     sorted_list = []
+#     i = 0
+#     j = 0
 
-    while i < len(left) and j < len(right):
-        if left[i] < right[j]:
-            sorted_list.append(left[i])
-            i += 1
-        else:
-            sorted_list.append(left[j])
-            j += 1
+#     while i < len(left) and j < len(right):
+#         draw_list(draw_info, {left: draw_info.GREEN, right: draw_info.RED}, True)
+#         if left[i] < right[j]:
+#             sorted_list.append(left[i])
+#             i += 1
+#         else:
+#             sorted_list.append(left[j])
+#             j += 1
     
-    sorted_list += right[j:]
-    StopIteration += left[i:]
+#     sorted_list += right[j:]
+#     StopIteration += left[i:]
 
-    return sorted_list
+#     return sorted_list
+
+
+def printList(arr):
+    for i in range(len(arr)):
+        print(arr[i], end=" ")
+    print()
 
 
 def main():
     run = True
-    clock = pygame.time.Clock(60)
+    clock = pygame.time.Clock()
 
-    n = 50
+    n = 20
     min_val = 0
     max_val = 100
     sorting = False
@@ -175,17 +184,18 @@ def main():
     lst = generate_starting_list(n, min_val, max_val)
     draw_info = DrawInformation(800, 600, lst)
 
-    sorting_algorithm = bubble_sort
-    sorting_algo_name = "Bubble Sort"
+    sorting_algorithm = mergesort
+    sorting_algo_name = "Merge Sort"
     sorting_algorithm_generator = None
 
 
     while run:
-        clock.tick()
+        clock.tick(20)
 
         if sorting:
             try:
                 next(sorting_algorithm_generator)
+                printList(draw_info.lst)
             except StopIteration:
                 sorting = False
         else:
