@@ -127,10 +127,41 @@ def insertion_sort(draw_info, ascending=True):
     
     return lst
 
+def merge_sort(draw_info, ascending=True):
+    lst = draw_info.lst
+    
+    if len(lst) == 1 or len(lst) == 0:
+        return
+    else:
+        middle = (len(lst) - 1)// 2
+        left = merge_sort(draw_info,ascending, lst[:middle])
+        right = merge_sort(draw_info, ascending, lst[middle:])
+        combined = merge(left, right)
+        return combined
+
+
+def merge(draw_info, left, right):
+    sorted_list = []
+    i = 0
+    j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            sorted_list.append(left[i])
+            i += 1
+        else:
+            sorted_list.append(left[j])
+            j += 1
+    
+    sorted_list += right[j:]
+    StopIteration += left[i:]
+
+    return sorted_list
+
 
 def main():
     run = True
-    clock = pygame.time.Clock()
+    clock = pygame.time.Clock(60)
 
     n = 50
     min_val = 0
@@ -148,7 +179,7 @@ def main():
 
 
     while run:
-        clock.tick(60)
+        clock.tick()
 
         if sorting:
             try:
