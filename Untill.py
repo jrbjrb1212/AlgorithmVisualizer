@@ -127,6 +127,8 @@ def insertion_sort(draw_info, ascending=True):
     
     return lst
 
+# look back over this method and merge method
+
 def merge_sort(draw_info, ascending=True):
     lst = draw_info.lst
     
