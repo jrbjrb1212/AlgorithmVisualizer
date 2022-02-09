@@ -129,39 +129,43 @@ def insertion_sort(draw_info, ascending=True):
     return lst
 
 
+def merge_intro(draw_info, ascending=True):
+    lst = draw_info.lst
+    print(lst)
+    lst = mergeSort(lst)
+    return lst
 
-# def merge_sort(draw_info, ascending=True):
-#     lst = draw_info.lst
-    
-#     if len(lst) == 1 or len(lst) == 0:
-#         return
-#     else:
-#         middle = (len(lst) - 1)// 2
-#         #raw_list(draw_info, {i-1: draw_info.GREEN, i: draw_info.RED}, True)
-#         left = merge_sort(draw_info, lst[:middle])
-#         right = merge_sort(draw_info, lst[middle:])
-#         combined = merge(left, right)
-#         return combined
+def selection_sort(draw_info, ascending=True):
+    lst = draw_info.lst
+    i = 0
+    j = len(lst) - 1
+    while i < j:
+        min_idx = i
+        max_idx = i
+        max_val = lst[i]
+        for k in range(i, j+1):
+            if lst[min_idx] > lst[k]:
+                min_idx = k
+            if lst[max_idx] < lst[k]:
+                max_idx = k
+                max_val = lst[k]
+                draw_list(draw_info, {max: draw_info.GREEN, k: draw_info.RED}, True)
 
 
-# def merge(draw_info, left, right):
-#     sorted_list = []
-#     i = 0
-#     j = 0
+        lst[i], lst[min_idx] = lst[min_idx], lst[i]
+        draw_list(draw_info, {min_idx: draw_info.GREEN, i: draw_info.RED}, True)
 
-#     while i < len(left) and j < len(right):
-#         draw_list(draw_info, {left: draw_info.GREEN, right: draw_info.RED}, True)
-#         if left[i] < right[j]:
-#             sorted_list.append(left[i])
-#             i += 1
-#         else:
-#             sorted_list.append(left[j])
-#             j += 1
-    
-#     sorted_list += right[j:]
-#     StopIteration += left[i:]
 
-#     return sorted_list
+        # Edge-case: if we shifted the value to the maximum in the last swap
+        if lst[min_idx] == max_val:
+            lst[j], lst[min_idx] = lst[min_idx], lst[j]
+        else:
+            lst[j], lst[max_idx] = lst[max_idx], lst[j]
+
+        i += 1
+        j -= 1
+    return lst
+
 
 
 def printList(arr):
@@ -174,7 +178,7 @@ def main():
     run = True
     clock = pygame.time.Clock()
 
-    n = 20
+    n = 50
     min_val = 0
     max_val = 100
     sorting = False
@@ -184,18 +188,18 @@ def main():
     lst = generate_starting_list(n, min_val, max_val)
     draw_info = DrawInformation(800, 600, lst)
 
-    sorting_algorithm = mergesort
-    sorting_algo_name = "Merge Sort"
+    sorting_algorithm = selection_sort
+    sorting_algo_name = "Selection_sort"
     sorting_algorithm_generator = None
 
 
     while run:
-        clock.tick(20)
+        clock.tick(10)
 
         if sorting:
             try:
-                next(sorting_algorithm_generator)
                 printList(draw_info.lst)
+                next(sorting_algorithm_generator)
             except StopIteration:
                 sorting = False
         else:
