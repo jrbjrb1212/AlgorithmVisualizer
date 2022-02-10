@@ -143,33 +143,58 @@ def selection_sort(draw_info, ascending=True):
         min_idx = i
         max_idx = i
         max_val = lst[i]
-        for k in range(i, j+1):
-            if lst[min_idx] > lst[k]:
-                min_idx = k
-            if lst[max_idx] < lst[k]:
-                max_idx = k
-                max_val = lst[k]
-                draw_list(draw_info, {max: draw_info.GREEN, k: draw_info.RED}, True)
-                
+        if ascending:
+            for k in range(i, j+1):
+                if lst[min_idx] > lst[k]:
+                    min_idx = k
+                if lst[max_idx] < lst[k] and ascending:
+                    max_idx = k
+                    max_val = lst[k]
+                    draw_list(draw_info, {max_idx: draw_info.GREEN, k: draw_info.RED}, True)
 
 
-        lst[i], lst[min_idx] = lst[min_idx], lst[i]
-        draw_list(draw_info, {min_idx: draw_info.GREEN, i: draw_info.RED}, True)
-        yield True
+            lst[i], lst[min_idx] = lst[min_idx], lst[i]
+            draw_list(draw_info, {min_idx: draw_info.GREEN, i: draw_info.RED}, True)
 
 
-        # Edge-case: if we shifted the value to the maximum in the last swap
-        if lst[min_idx] == max_val:
-            lst[j], lst[min_idx] = lst[min_idx], lst[j]
-            draw_list(draw_info, {min_idx: draw_info.GREEN, j: draw_info.RED}, True)
-            yield True
-        else:
-            lst[j], lst[max_idx] = lst[max_idx], lst[j]
-            draw_list(draw_info, {max_idx: draw_info.GREEN, j: draw_info.RED}, True)
-            yield True
+            # Edge-case: if we shifted the value to the maximum in the last swap
+            if lst[min_idx] == max_val and ascending:
+                lst[j], lst[min_idx] = lst[min_idx], lst[j]
+                draw_list(draw_info, {min_idx: draw_info.GREEN, j: draw_info.RED}, True)
+                yield True
+            elif lst[min_idx] != max_val and ascending:
+                lst[j], lst[max_idx] = lst[max_idx], lst[j]
+                draw_list(draw_info, {max_idx: draw_info.GREEN, j: draw_info.RED}, True)
+                yield True
 
-        i += 1
-        j -= 1
+            i += 1
+            j -= 1
+        # else:
+        #      for k in range(i, j+1):
+        #         if lst[max_idx] < lst[k] and ascending:
+        #             max_idx = k
+        #             max_val = lst[k]
+        #             draw_list(draw_info, {max: draw_info.GREEN, k: draw_info.RED}, True)
+        #         if lst[min_idx] > lst[k]:
+        #             min_idx = k
+        #             min_idx = lst[k]
+        #             draw_list(draw_info, {min_idx: draw_info.GREEN, k: draw_info.RED}, True)
+
+
+        #     lst[i], lst[min_idx] = lst[min_idx], lst[i]
+        #     draw_list(draw_info, {min_idx: draw_info.GREEN, i: draw_info.RED}, True)
+        #     yield True
+
+
+        #     # Edge-case: if we shifted the value to the maximum in the last swap
+        #     if lst[min_idx] == max_val and ascending:
+        #         lst[j], lst[min_idx] = lst[min_idx], lst[j]
+        #         draw_list(draw_info, {min_idx: draw_info.GREEN, j: draw_info.RED}, True)
+        #         yield True
+        #     elif lst[min_idx] != max_val and ascending:
+        #         lst[j], lst[max_idx] = lst[max_idx], lst[j]
+        #         draw_list(draw_info, {max_idx: draw_info.GREEN, j: draw_info.RED}, True)
+        #         yield True
     return lst
 
 
@@ -206,6 +231,7 @@ def main():
             try:
                 # print(sorting_algorithm_generator)
                 # print(next(sorting_algorithm_generator))
+                next(sorting_algorithm_generator)
             except StopIteration:
                 sorting = False
         else:
