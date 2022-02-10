@@ -50,7 +50,7 @@ def draw(draw_info, algo_name, ascending):
     controls = draw_info.FONT.render("R - Reset | SPACE - Start Sorting | A - Ascending | D - Descending", 1, draw_info.BLACK)
     draw_info.window.blit(controls, (draw_info.width/2 - controls.get_width()/2, 50))
 
-    sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort", 1, draw_info.BLACK)
+    sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | S - Selection Sort", 1, draw_info.BLACK)
     draw_info.window.blit(sorting, (draw_info.width/2 - sorting.get_width()/2, 80))
 
     draw_list(draw_info)
@@ -129,11 +129,11 @@ def insertion_sort(draw_info, ascending=True):
     return lst
 
 
-def merge_intro(draw_info, ascending=True):
-    lst = draw_info.lst
-    print(lst)
-    lst = mergeSort(lst)
-    return lst
+# def merge_intro(draw_info, ascending=True):
+#     lst = draw_info.lst
+#     print(lst)
+#     lst = mergeSort(lst)
+#     return lst
 
 def selection_sort(draw_info, ascending=True):
     lst = draw_info.lst
@@ -150,17 +150,23 @@ def selection_sort(draw_info, ascending=True):
                 max_idx = k
                 max_val = lst[k]
                 draw_list(draw_info, {max: draw_info.GREEN, k: draw_info.RED}, True)
+                
 
 
         lst[i], lst[min_idx] = lst[min_idx], lst[i]
         draw_list(draw_info, {min_idx: draw_info.GREEN, i: draw_info.RED}, True)
+        yield True
 
 
         # Edge-case: if we shifted the value to the maximum in the last swap
         if lst[min_idx] == max_val:
             lst[j], lst[min_idx] = lst[min_idx], lst[j]
+            draw_list(draw_info, {min_idx: draw_info.GREEN, j: draw_info.RED}, True)
+            yield True
         else:
             lst[j], lst[max_idx] = lst[max_idx], lst[j]
+            draw_list(draw_info, {max_idx: draw_info.GREEN, j: draw_info.RED}, True)
+            yield True
 
         i += 1
         j -= 1
@@ -188,8 +194,8 @@ def main():
     lst = generate_starting_list(n, min_val, max_val)
     draw_info = DrawInformation(800, 600, lst)
 
-    sorting_algorithm = selection_sort
-    sorting_algo_name = "Selection_sort"
+    sorting_algorithm = bubble_sort
+    sorting_algo_name = "Bubble Sort"
     sorting_algorithm_generator = None
 
 
@@ -198,8 +204,8 @@ def main():
 
         if sorting:
             try:
-                printList(draw_info.lst)
-                next(sorting_algorithm_generator)
+                # print(sorting_algorithm_generator)
+                # print(next(sorting_algorithm_generator))
             except StopIteration:
                 sorting = False
         else:
@@ -234,6 +240,10 @@ def main():
             elif event.key == pygame.K_b and not sorting:
                 sorting_algorithm = bubble_sort
                 sorting_algo_name = "Bubble Sort"
+
+            elif event.key == pygame.K_s and not sorting:
+                sorting_algorithm = selection_sort
+                sorting_algo_name = "Selection Sort"
 
             
 
