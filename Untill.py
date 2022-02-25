@@ -214,7 +214,7 @@ def main():
     run = True
     clock = pygame.time.Clock()
 
-    
+    p = 45
     n = 10
     min_val = 0
     max_val = 100
