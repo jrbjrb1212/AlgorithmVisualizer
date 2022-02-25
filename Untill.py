@@ -214,7 +214,8 @@ def main():
     run = True
     clock = pygame.time.Clock()
 
-    n = 20
+    
+    n = 10
     min_val = 0
     max_val = 100
     sorting = False
