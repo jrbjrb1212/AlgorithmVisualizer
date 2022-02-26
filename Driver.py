@@ -77,8 +77,6 @@ def get_text_input(screen, clock):
     return user_text, speed
 
 
-
-
 def main():
     run = True
     clock = pygame.time.Clock()
@@ -96,7 +94,7 @@ def main():
     n, speed = get_text_input(draw_info, clock)
     n = int(n)
     speed = int(speed)
-    
+
     lst = generate_starting_list(n, min_val, max_val)
     draw_info.set_list(lst)
 
@@ -113,8 +111,6 @@ def main():
 
         if sorting:
             try:
-                # print(sorting_algorithm_generator)
-                # print(next(sorting_algorithm_generator))
                 next(sorting_algorithm_generator)
             except StopIteration:
                 sorting = False
@@ -155,9 +151,7 @@ def main():
                 sorting_algorithm = selection_sort
                 sorting_algo_name = "Selection Sort"
 
-            
-
-            
+                 
     pygame.quit()
 
 if __name__ == "__main__":
