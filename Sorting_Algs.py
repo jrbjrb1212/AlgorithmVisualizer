@@ -1,4 +1,10 @@
+from Untill.py import 
 
+import pygame
+import random
+import math
+
+pygame.init()
 
 def selection_sort(draw_info, ascending=True):
     lst = draw_info.lst
