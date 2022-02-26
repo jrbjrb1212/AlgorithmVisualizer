@@ -151,6 +151,10 @@ def main():
                 sorting_algorithm = selection_sort
                 sorting_algo_name = "Selection Sort"
 
+            elif event.key == pygame.K_m and not sorting:
+                sorting_algorithm = merge_intro
+                sorting_algo_name = "Merge Sort"
+
                  
     pygame.quit()
 

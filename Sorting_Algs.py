@@ -116,45 +116,53 @@ def bubble_sort(draw_info, ascending = True):
     return lst
 
 
-def merge_sort(draw_info, ascending = True):
-    if len(arr) > 1:
+def merge_intro(draw_info, ascending = True):
+    lst = draw_info.lst
+    merge_sort(draw_info, lst) 
+
+def merge_sort(draw_info, lst):
+    if len(lst) > 1:
   
          # Finding the mid of the array
-        mid = len(arr)//2
+        mid = len(lst)//2
   
         # Dividing the array elements
-        L = arr[:mid]
+        L = lst[:mid]
   
         # into 2 halves
-        R = arr[mid:]
+        R = lst[mid:]
+
+        if (len(L) > 1 and len(R) > 1):
+            draw_list(draw_info, {L[1]: draw_info.GREEN, R[len(R)-1]: draw_info.RED}, True)
+
   
         # Sorting the first half
-        mergeSort(L)
-        for index in arr:
-            print(index)
+        merge_sort(draw_info, L)
   
         # Sorting the second half
-        mergeSort(R)
+        merge_sort(draw_info, R)
   
         i = j = k = 0
   
         # Copy data to temp arrays L[] and R[]
         while i < len(L) and j < len(R):
             if L[i] < R[j]:
-                arr[k] = L[i]
+                lst[k] = L[i]
                 i += 1
             else:
-                arr[k] = R[j]
+                lst[k] = R[j]
                 j += 1
             k += 1
   
         # Checking if any element was left
         while i < len(L):
-            arr[k] = L[i]
+            lst[k] = L[i]
             i += 1
             k += 1
   
         while j < len(R):
-            arr[k] = R[j]
+            lst[k] = R[j]
             j += 1
             k += 1
+
+    return lst
