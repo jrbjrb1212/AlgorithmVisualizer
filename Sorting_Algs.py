@@ -208,4 +208,47 @@ def merge_sort(draw_info, lst):
     return lst
 
 
-    
+def quick_sort_intro(draw_info, ascending=True):
+    lst = draw_info.lst
+    quickSort(draw_info, lst, 0, len(lst) -1)
+
+
+def partition(draw_info, arr, low, high):
+    i = (low-1)         # index of smaller element
+    pivot = arr[high]     # pivot
+ 
+    for j in range(low, high):
+ 
+        # If current element is smaller than or
+        # equal to pivot
+        if arr[j] <= pivot:
+ 
+            # increment index of smaller element
+            i = i+1
+            arr[i], arr[j] = arr[j], arr[i]
+
+            draw_list(draw_info, {i: draw_info.GREEN, j: draw_info.RED}, True)
+            yield True
+ 
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    draw_list(arr, {i+1: draw_info.GREEN, high: draw_info.RED}, True)
+    return (i+1)
+ 
+# The main function that implements QuickSort
+# arr[] --> Array to be sorted,
+# low  --> Starting index,
+# high  --> Ending index
+ 
+def quickSort(draw_info, arr, low, high):
+    if len(arr) == 1:
+        return arr
+    if low < high:
+ 
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(draw_info, arr, low, high)
+ 
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(draw_info, arr, low, pi-1)
+        quickSort(draw_info, arr, pi+1, high)

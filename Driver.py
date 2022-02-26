@@ -14,7 +14,7 @@ def get_text_input(screen, clock):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
@@ -154,6 +154,10 @@ def main():
             elif event.key == pygame.K_m and not sorting:
                 sorting_algorithm = merge_intro
                 sorting_algo_name = "Merge Sort"
+            
+            elif event.key == pygame.K_q and not sorting:
+                sorting_algorithm = quick_sort_intro
+                sorting_algo_name = "Quick Sort"
 
                  
     pygame.quit()
