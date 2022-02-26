@@ -118,94 +118,68 @@ def bubble_sort(draw_info, ascending = True):
 
 def merge_intro(draw_info, ascending = True):
     lst = draw_info.lst
-    merge_sort(draw_info, lst) 
+    merge_sort(draw_info, lst, 0, len(lst)-1, ascending) 
 
-def merge_sort(draw_info, lst):
-    if len(lst) > 1:
-  
-         # Finding the mid of the array
-        mid = len(lst)//2
-  
-        # Dividing the array elements
-        L = lst[:mid]
-  
-        # into 2 halves
-        R = lst[mid:]
-  
-        # Sorting the first half
-        merge_sort(draw_info, L)
-  
-        # Sorting the second half
-        merge_sort(draw_info, R)
-  
-        i = j = k = 0
-        
+def merge_sort(draw_info, arr, left, right, ascending):
+    if left < right:
+ 
+        # Same as (l+r)//2, but avoids overflow for
+        # large l and h
+        mid = left+(right-left)//2
+ 
+        # Sort first and second halves
+        draw_list(draw_info, {left: draw_info.BLUE, mid: draw_info.BLUE}, True)
+        merge_sort(draw_info, arr, left, mid,ascending)
 
+        draw_list(draw_info, {mid+1: draw_info.BLUE, right: draw_info.BLUE}, True)
+        merge_sort(draw_info, arr, mid+1, right, ascending)
 
-        # Copy data to temp arrays L[] and R[]
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                lst[k] = L[i]
+        merge(draw_info, arr, left, mid, right)
 
-                full_lst = draw_info.lst
-                num = 0
-                idx = num
-                while num < len(full_lst):
-                    if full_lst[num] == L[i]:
-                        idx = num
-                    num=num + 1
-                draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
-
-                i += 1
-                
-            else:
-                lst[k] = R[j]
-
-                full_lst = draw_info.lst
-                num = 0
-                idx = num
-                while num < len(full_lst):
-                    if full_lst[num] == R[j]:
-                        idx = num
-                    num=num + 1
-                draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
-
-                j += 1
-
-            k += 1
-  
-        # Checking if any element was left
-        while i < len(L):
-            lst[k] = L[i]
-
-            full_lst = draw_info.lst
-            num = 0
-            idx = num
-            while num < len(full_lst):
-                if full_lst[num] == L[i]:
-                    idx = num
-                num=num + 1
-            draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
-
+def merge(draw_info, arr, left, mid, right):
+    n1 = mid - left + 1
+    n2 = right - mid
+ 
+    # create temp arrays
+    L = [0] * (n1)
+    R = [0] * (n2)
+ 
+    # Copy data to temp arrays L[] and R[]
+    for i in range(0, n1):
+        L[i] = arr[left + i]
+ 
+    for j in range(0, n2):
+        R[j] = arr[mid + 1 + j]
+ 
+    # Merge the temp arrays back into arr[l..r]
+    i = 0     # Initial index of first subarray
+    j = 0     # Initial index of second subarray
+    k = left     # Initial index of merged subarray
+ 
+    while i < n1 and j < n2:
+        if L[i] <= R[j]:
+            arr[k] = L[i]
             i += 1
-            k += 1
-  
-        while j < len(R):
-            lst[k] = R[j]
-
-            full_lst = draw_info.lst
-            num = 0
-            idx = num
-            while num < len(full_lst):
-                if full_lst[num] == R[j]:
-                    idx = num
-                num=num + 1
-            draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
-            
+        else:
+            arr[k] = R[j]
             j += 1
-            k += 1
-
-    return lst
+        k += 1
+ 
+    # Copy the remaining elements of L[], if there
+    # are any
+    while i < n1:
+        draw_list(draw_info, {k: draw_info.RED, i: draw_info.GREEN}, True)
+        arr[k] = L[i]
+        i += 1
+        k += 1
+ 
+    # Copy the remaining elements of R[], if there
+    # are any
+    while j < n2:
+        draw_list(draw_info, {k: draw_info.RED, j: draw_info.GREEN}, True)
+        arr[k] = R[j]
+        j += 1
+        k += 1
 
 
 def quick_sort_intro(draw_info, ascending=True):
