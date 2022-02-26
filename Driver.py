@@ -8,8 +8,9 @@ def get_text_input(screen, clock):
     small_font = pygame.font.SysFont('monospace', 25)
     font = pygame.font.SysFont('monospace', 30)
     text_surface = font.render(user_text, True, (255,255,255))
+    run = True
 
-    while True:
+    while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -18,11 +19,8 @@ def get_text_input(screen, clock):
                 if event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
 
-                elif event.key == pygame.K_RETURN:
-                    if len(user_text) == 0:
-                        continue
-                    else:
-                        return user_text
+                elif event.key == pygame.K_RETURN and len(user_text) > 0:
+                    run = False
 
                 else:
                     user_text += event.unicode
@@ -30,11 +28,54 @@ def get_text_input(screen, clock):
         screen.window.fill(screen.BLACK)
         text_surface = font.render(user_text, True, (255,255,255))
         screen.window.blit(text_surface, (400,300))
-        controls = small_font.render("Enter the amount of element you would like to sort", 1, screen.WHITE)
+        controls = small_font.render("Enter the amount of element you would like to sort:", 1, screen.WHITE)
         screen.window.blit(controls, (screen.width/2 - controls.get_width()/2, 250))
 
         pygame.display.flip()
         clock.tick()
+    
+    screen.window.fill(screen.BLACK)
+    speed = -5
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.ext()
+                
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_s:
+                    # slow speed
+                    speed = 10
+                    run = False
+
+                elif event.key == pygame.K_a:
+                    # average speed
+                   speed = 60
+                   run = False
+
+                elif event.key == pygame.K_f:
+                    # fast speed
+                    speed = 120
+                    run = False
+
+                elif event.key == pygame.K_v:
+                    # very fast speed
+                    speed = 0
+                    run = False
+                    
+        
+        screen.window.fill(screen.BLACK)
+        controls = small_font.render("Sorting Speed:", 1, screen.WHITE)
+        speeeds = small_font.render("Slow(S)     Average(A)    Fast(F)     Very Fast(V)", 1, screen.WHITE)
+        screen.window.blit(controls, (screen.width/2 - controls.get_width()/2, 200))
+        screen.window.blit(speeeds, (screen.width/2 - speeeds.get_width()/2, 250))
+
+        pygame.display.flip()
+        clock.tick()
+    
+    return user_text, speed
+
 
 
 
@@ -52,8 +93,10 @@ def main():
 
     lst = generate_starting_list(n, min_val, max_val)
     draw_info = DrawInformation(800, 600, lst)
-    n = int(get_text_input(draw_info, clock))
-
+    n, speed = get_text_input(draw_info, clock)
+    n = int(n)
+    speed = int(speed)
+    
     lst = generate_starting_list(n, min_val, max_val)
     draw_info.set_list(lst)
 
@@ -63,7 +106,10 @@ def main():
 
 
     while run:
-        clock.tick(10)
+        if speed == 0:
+            clock.tick()
+        else:
+            clock.tick(speed)
 
         if sorting:
             try:
