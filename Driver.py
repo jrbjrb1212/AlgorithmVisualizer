@@ -4,7 +4,6 @@ import sys
 import pygame
 
 def get_text_input(screen, clock):
-    pygame.init()
     user_text = ''
     small_font = pygame.font.SysFont('monospace', 25)
     font = pygame.font.SysFont('monospace', 30)
@@ -52,11 +51,11 @@ def main():
 
 
     lst = generate_starting_list(n, min_val, max_val)
-    while True:
-        raw_info = DrawInformation(800, 600, lst)
-        n = int(get_text_input(raw_info, clock))
-        lst = generate_starting_list(n, min_val, max_val)
-        raw_info2 = DrawInformation(800, 600, lst)
+    draw_info = DrawInformation(800, 600, lst)
+    n = int(get_text_input(draw_info, clock))
+
+    lst = generate_starting_list(n, min_val, max_val)
+    draw_info.set_list(lst)
 
     sorting_algorithm = bubble_sort
     sorting_algo_name = "Bubble Sort"
