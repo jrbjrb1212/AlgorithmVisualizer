@@ -131,10 +131,6 @@ def merge_sort(draw_info, lst):
   
         # into 2 halves
         R = lst[mid:]
-
-        if (len(L) > 1 and len(R) > 1):
-            draw_list(draw_info, {L[1]: draw_info.GREEN, R[len(R)-1]: draw_info.RED}, True)
-
   
         # Sorting the first half
         merge_sort(draw_info, L)
@@ -143,26 +139,73 @@ def merge_sort(draw_info, lst):
         merge_sort(draw_info, R)
   
         i = j = k = 0
-  
+        
+
+
         # Copy data to temp arrays L[] and R[]
         while i < len(L) and j < len(R):
             if L[i] < R[j]:
                 lst[k] = L[i]
+
+                full_lst = draw_info.lst
+                num = 0
+                idx = num
+                while num < len(full_lst):
+                    if full_lst[num] == L[i]:
+                        idx = num
+                    num=num + 1
+                draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
+
                 i += 1
+                
             else:
                 lst[k] = R[j]
+
+                full_lst = draw_info.lst
+                num = 0
+                idx = num
+                while num < len(full_lst):
+                    if full_lst[num] == R[j]:
+                        idx = num
+                    num=num + 1
+                draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
+
                 j += 1
+
             k += 1
   
         # Checking if any element was left
         while i < len(L):
             lst[k] = L[i]
+
+            full_lst = draw_info.lst
+            num = 0
+            idx = num
+            while num < len(full_lst):
+                if full_lst[num] == L[i]:
+                    idx = num
+                num=num + 1
+            draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
+
             i += 1
             k += 1
   
         while j < len(R):
             lst[k] = R[j]
+
+            full_lst = draw_info.lst
+            num = 0
+            idx = num
+            while num < len(full_lst):
+                if full_lst[num] == R[j]:
+                    idx = num
+                num=num + 1
+            draw_list(draw_info, {k: draw_info.GREEN, idx: draw_info.RED}, True)
+            
             j += 1
             k += 1
 
     return lst
+
+
+    
