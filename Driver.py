@@ -1,9 +1,11 @@
 from Sorting_Algs import *
 
+import sys
+
 def get_text_input(screen, clock):
     pygame.init()
     user_text = ''
-    FONT = pygame.font.SysFont('monospace', 20)
+    FONT = pygame.font.SysFont('monospace', 30)
     text_surface = FONT.render(user_text, True, (255,255,255))
 
     while True:
@@ -14,10 +16,13 @@ def get_text_input(screen, clock):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
-                    draw(screen, 'null', True)
+                elif event.key == pygame.K_RETURN:
+                    print("HHHHH")
+                    sys.ext()
                 else:
                     user_text += event.unicode
         
+        screen.window.fill(screen.BLACK)
         text_surface = FONT.render(user_text, True, (255,255,255))
         screen.window.blit(text_surface, (0,0))
 
