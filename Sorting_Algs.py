@@ -227,11 +227,11 @@ def partition(draw_info, arr, low, high):
             i = i+1
             arr[i], arr[j] = arr[j], arr[i]
 
-            draw_list(draw_info, {i: draw_info.GREEN, j: draw_info.RED}, True)
-            yield True
+            #draw_list(draw_info, {i: draw_info.GREEN, j: draw_info.RED}, True)
+            #yield True
  
     arr[i+1], arr[high] = arr[high], arr[i+1]
-    draw_list(arr, {i+1: draw_info.GREEN, high: draw_info.RED}, True)
+    #draw_list(draw_info, {i+1: draw_info.GREEN, high: draw_info.RED}, True)
     return (i+1)
  
 # The main function that implements QuickSort
@@ -242,13 +242,18 @@ def partition(draw_info, arr, low, high):
 def quickSort(draw_info, arr, low, high):
     if len(arr) == 1:
         return arr
+    
     if low < high:
  
         # pi is partitioning index, arr[p] is now
         # at right place
+
         pi = partition(draw_info, arr, low, high)
  
         # Separately sort elements before
         # partition and after partition
+        draw_list(draw_info, {low: draw_info.BLUE, pi-1: draw_info.BLUE}, True)
         quickSort(draw_info, arr, low, pi-1)
+
+        draw_list(draw_info, {p+1: draw_info.BLUE, high: draw_info.BLUE}, True)
         quickSort(draw_info, arr, pi+1, high)

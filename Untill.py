@@ -10,6 +10,7 @@ class DrawInformation:
     WHITE = 255, 255, 255
     GREEN = 0, 255, 0
     RED = 255, 0 ,0
+    BLUE = 0, 0, 255
     BACKGROUND_COLOR = WHITE
     
     GRADIENTS = [
@@ -77,6 +78,9 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 
     if clear_bg:
         pygame.display.update()
+
+def list_update(draw_info, arr):
+    pass
 
 def draw_list_recursive(lst, color_positions={}, clear_bg=False):
 
