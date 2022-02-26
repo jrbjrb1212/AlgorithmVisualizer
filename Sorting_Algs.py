@@ -134,9 +134,9 @@ def merge_sort(draw_info, arr, left, right, ascending):
         draw_list(draw_info, {mid+1: draw_info.BLUE, right: draw_info.BLUE}, True)
         merge_sort(draw_info, arr, mid+1, right, ascending)
 
-        merge(draw_info, arr, left, mid, right)
+        merge(draw_info, arr, left, mid, right, ascending)
 
-def merge(draw_info, arr, left, mid, right):
+def merge(draw_info, arr, left, mid, right, ascending):
     n1 = mid - left + 1
     n2 = right - mid
  
@@ -157,12 +157,20 @@ def merge(draw_info, arr, left, mid, right):
     k = left     # Initial index of merged subarray
  
     while i < n1 and j < n2:
-        if L[i] <= R[j]:
-            arr[k] = L[i]
-            i += 1
+        if ascending:
+            if L[i] <= R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
         else:
-            arr[k] = R[j]
-            j += 1
+            if L[i] >= R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
         k += 1
  
     # Copy the remaining elements of L[], if there
