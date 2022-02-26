@@ -1,4 +1,4 @@
-from Untill.py import 
+from Untill import *
 
 import pygame
 import random
