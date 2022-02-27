@@ -34,7 +34,7 @@ def get_text_input(screen, clock):
         screen.window.fill(screen.BLACK)
         text_surface = large_font.render(user_text, True, (255,255,255))
         controls = small_font.render("Enter the amount of element you would like to sort:", 1, screen.WHITE)
-        screen.window.blit(text_surface, (screen.width/2 - controls.get_width()/2 + 450,350))
+        screen.window.blit(text_surface, (screen.width/2 - controls.get_width()/2 + 450,300))
         screen.window.blit(controls, (screen.width/2 - controls.get_width()/2, 250))
 
         pygame.display.flip()
