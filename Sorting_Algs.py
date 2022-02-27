@@ -1,5 +1,5 @@
 from Untill import *
-
+# imports modules
 import pygame
 import random
 import math
@@ -33,10 +33,12 @@ def selection_sort(draw_info, ascending=True):
             if lst[min_idx] == max_val and ascending:
                 lst[j], lst[min_idx] = lst[min_idx], lst[j]
                 draw_list(draw_info, {min_idx: draw_info.GREEN, j: draw_info.RED}, True)
+                # update list
                 yield True
             elif lst[min_idx] != max_val and ascending:
                 lst[j], lst[max_idx] = lst[max_idx], lst[j]
                 draw_list(draw_info, {max_idx: draw_info.GREEN, j: draw_info.RED}, True)
+                # update list
                 yield True
 
             i += 1
@@ -56,6 +58,7 @@ def selection_sort(draw_info, ascending=True):
 
             lst[i], lst[min_idx] = lst[min_idx], lst[i]
             draw_list(draw_info, {min_idx: draw_info.GREEN, i: draw_info.RED}, True)
+            # update list
             yield True
 
 
@@ -67,6 +70,7 @@ def selection_sort(draw_info, ascending=True):
             elif lst[min_idx] != max_val:
                 lst[j], lst[max_idx] = lst[max_idx], lst[j]
                 draw_list(draw_info, {max_idx: draw_info.GREEN, j: draw_info.RED}, True)
+                
                 yield True
             
             i += 1
@@ -82,6 +86,7 @@ def insertion_sort(draw_info, ascending=True):
     for i in range(1, len(lst)):
         current = lst[i]
 
+        # default selection sort alg
         while True:
             ascending_sort = i > 0 and lst[i-1] > current and ascending
             descending_sort = i > 0 and lst[i-1] > current and not ascending
@@ -92,7 +97,9 @@ def insertion_sort(draw_info, ascending=True):
             lst[i] = lst[i-1]
             i = i - 1
             lst[i] = current
+            # update list
             draw_list(draw_info, {i-1: draw_info.GREEN, i: draw_info.RED}, True)
+            # yield true for easy acess
             yield True
     
     return lst
@@ -100,6 +107,7 @@ def insertion_sort(draw_info, ascending=True):
 def bubble_sort(draw_info, ascending = True):
     lst = draw_info.lst
 
+    # default bubble sort alg
     for i in range(len(lst) - 1):
         for j in range(len(lst) - 1 - i):
             num1 = lst[j]
@@ -108,6 +116,7 @@ def bubble_sort(draw_info, ascending = True):
 
             if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
                 # quick way to swap with using temp variable
+                # update list
                 lst[j], lst[j+1] = lst[j+1], lst[j]
                 draw_list(draw_info, {j: draw_info.GREEN, j+1: draw_info.RED}, True)
 
@@ -115,11 +124,14 @@ def bubble_sort(draw_info, ascending = True):
                 yield True
     return lst
 
-
+# driver method for merge sort 
 def merge_intro(draw_info, ascending = True):
     lst = draw_info.lst
     merge_sort(draw_info, lst, 0, len(lst)-1, ascending) 
+    while(True):
+        yield True
 
+# core split method for mergesort
 def merge_sort(draw_info, arr, left, right, ascending):
     if left < right:
  
@@ -136,6 +148,7 @@ def merge_sort(draw_info, arr, left, right, ascending):
 
         merge(draw_info, arr, left, mid, right, ascending)
 
+# core merging method for mergesort
 def merge(draw_info, arr, left, mid, right, ascending):
     n1 = mid - left + 1
     n2 = right - mid
@@ -156,19 +169,25 @@ def merge(draw_info, arr, left, mid, right, ascending):
     j = 0     # Initial index of second subarray
     k = left     # Initial index of merged subarray
  
+    # 
     while i < n1 and j < n2:
         if ascending:
             if L[i] <= R[j]:
+                draw_list(draw_info, {k: draw_info.RED, i: draw_info.GREEN}, True)
                 arr[k] = L[i]
                 i += 1
             else:
+                draw_list(draw_info, {k: draw_info.RED, j: draw_info.GREEN}, True)
                 arr[k] = R[j]
                 j += 1
+
         else:
             if L[i] >= R[j]:
+                draw_list(draw_info, {k: draw_info.RED, i: draw_info.GREEN}, True)
                 arr[k] = L[i]
                 i += 1
             else:
+                draw_list(draw_info, {k: draw_info.RED, j: draw_info.GREEN}, True)
                 arr[k] = R[j]
                 j += 1
         k += 1
@@ -193,6 +212,8 @@ def merge(draw_info, arr, left, mid, right, ascending):
 def quick_sort_intro(draw_info, ascending=True):
     lst = draw_info.lst
     quickSort(draw_info, lst, 0, len(lst) -1, ascending)
+    while(True):
+        yield True
 
 
 def partition(draw_info, arr, low, high, ascending):
